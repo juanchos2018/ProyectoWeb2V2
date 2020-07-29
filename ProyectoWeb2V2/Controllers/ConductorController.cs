@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using ProyectoWeb2V2.Models;
 using System.Net.Http;
 using Newtonsoft.Json;
+using System.IO;
 namespace ProyectoWeb2V2.Controllers
 {
     public class ConductorController : Controller
@@ -20,13 +21,13 @@ namespace ProyectoWeb2V2.Controllers
         public async Task<ActionResult> Get_Consulta_Dni(string dni)
         {
             HttpClient client = new HttpClient();
-            //string dni = "45713875";
+            
             String URL2 = "https://quertium.com/api/v1/reniec/dni/" + dni + "?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.MTM3Mw.x-jUgUBcJukD5qZgqvBGbQVMxJFUAIDroZEm4Y9uTyg";
             HttpResponseMessage response = await client.GetAsync(URL2);
             if (response.IsSuccessStatusCode)
             {
                 var data = await response.Content.ReadAsStringAsync();
-                var product = JsonConvert.DeserializeObject<Conductor>(data);
+                var product = JsonConvert.DeserializeObject<Persona>(data);
                 return Json(product, JsonRequestBehavior.AllowGet);
             }
 
@@ -34,6 +35,49 @@ namespace ProyectoWeb2V2.Controllers
 
         }
 
+
+        public ActionResult CreateConductor()
+        {
+            Conductor conductor = new Conductor();
+            object status="";
+            if (Request.Files.Count > 0)
+            {
+                try
+                {
+                    System.IO.FileStream stream;
+                    HttpFileCollectionBase files = Request.Files;
+                    HttpPostedFileBase file = files[0];
+
+                    conductor.dni_conductor = HttpContext.Request.Params["dni_conductor"];
+                    conductor.nombres_conductor = HttpContext.Request.Params["nombres_conductor"];
+                    conductor.apellido_conductor = HttpContext.Request.Params["apellido_conductor"];
+                    conductor.correo_conductor = HttpContext.Request.Params["correo_conductor"];                    
+                    conductor.clave_conductor = HttpContext.Request.Params["clave_conductor"];                    
+                    conductor.fecha_creacion = DateTime.Now.ToShortDateString();
+
+                    string fileName = file.FileName;
+                    string path = Path.Combine(Server.MapPath("~/Content/Images/"), file.FileName);
+                    file.SaveAs(path);
+                    stream = new FileStream(Path.Combine(path), FileMode.Open);
+                    Directory.CreateDirectory(Server.MapPath("~/uploads/"));
+                    Task task = Task.Run(() => conductor.Upload(stream, conductor, file.FileName));
+                    task.Wait();
+                   status = task.Status;  // 5 task complete..
+                    if (task.IsCompleted)
+                    {
+                        return Json(status, JsonRequestBehavior.AllowGet);
+                    }
+
+                }
+
+                catch (Exception e)
+                {
+                    return Json("error" + e.Message);
+                }
+            }
+
+            return Json(status, JsonRequestBehavior.AllowGet);
+        }
 
     }
 }

@@ -81,47 +81,51 @@ function borrarDatos() {
 
 function Agregar() {
 
-    var frm = new FormData();
-    var idproducto = document.getElementById("txtidproducto").value;
-    var nombre = document.getElementById("txtnombre").value;
-    var descripcion = document.getElementById("txtdescripcion").value;
-    var precio = document.getElementById("txtprecio").value;
-    var imgFoto = document.getElementById("imgFoto").src.replace("data:image/png;base64,", "");
+    if (window.FormData == undefined)
+        alert("Error: FormData is undefined");
 
-    frm.append("IDPRODUCTO", idproducto);
-    frm.append("IDEMPRESA", 1);
-    frm.append("NOMBRE", nombre);
-    frm.append("DESCRIPCION", descripcion);
-    frm.append("PRECIO", precio);
-    frm.append("IMAGEN", imgFoto);
-    //frm.append("ESTADO", 1);
+    else {
+        var fileUpload = $("#fileToUpload").get(0); 
+        var dni = $("#txtdni").val();
+        var nombres_conductor = $("#txtnombres").val();
+        var apellido_conductor = $("#txtapellidos").val();
+        var correo_conductor = $("#txtcorreo").val();
+        var clave_conductor = $("#txtclave").val();
+        var files = fileUpload.files;
+        var fileData = new FormData();
 
-    if (confirm("¿Desea realmente guardar?") == 1) {
+        fileData.append(files[0].name, files[0]);
+        fileData.append("dni_conductor", dni);
+        fileData.append("nombres_conductor", nombres_conductor);
+        fileData.append("apellido_conductor", apellido_conductor);
+        fileData.append("correo_conductor", correo_conductor);
+        fileData.append("clave_conductor", clave_conductor);
+      
+        // ShowProgress();
         $.ajax({
-            type: "POST",
-            url: "Producto/guardarDatos",
-            data: frm,
+            url: '/Conductor/CreateConductor',
+            type: 'post',
+            datatype: 'json',
             contentType: false,
             processData: false,
-            success: function (data) {
-                if (data == 0) {
-                    alert("Ocurrio un error")
-                } else {
-                    listar();
-                    alert("Se ejecuto correctamente")
-                    document.getElementById("btnCancelar").click();
-                }
-            }
+            async: false,
+            data: fileData,
+            success: function (response) {
+                console.log("respuesta es:" + response);
+                alert("Registrado Conductor We  ---");
+               // listavehiculos();
+            },
+            error: function (xhr, status) {
+                alert('Disculpe, existió un problema');
+            },
         });
     }
-    else {
-
-    }
+    
 }
 
-var btnFoto = document.getElementById("btnFoto");
+var btnFoto = document.getElementById("fileToUpload");
 btnFoto.onchange = function (e) {
-    var file = document.getElementById("btnFoto").files[0];
+    var file = document.getElementById("fileToUpload").files[0];
     var reader = new FileReader();
     if (reader != null) {
         reader.onloadend = function () {

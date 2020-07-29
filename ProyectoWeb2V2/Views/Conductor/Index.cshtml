@@ -28,7 +28,7 @@
                                 <img id="imgFoto" width="300" height="300" src="" alt="">
                                 <div class="small font-italic text-muted mb-4">Recomendación 300x300</div>
                                 <div class="form-group">
-                                    <input type="file" class="form-control borrar" id="btnFoto">
+                                    <input type="file" class="form-control borrar" id="fileToUpload">
                                 </div>
                             </div>
                         </div>
@@ -37,24 +37,31 @@
                         <div class="card mb-4">
                             <div class="card-header">Datos Conductor</div>
                             <div class="card-body">
-                                <div class="form-group">
-                                    <label>Dni</label>
-                                    <input class="form-control borrar" id="txtdni" type="number">
-                                    <button  type="button" id="btnconsultar" class="btn btn-primary">Consultar</button>
+                                <form action="/" method="post">
 
-                                </div>
-                                <div class="form-group">
-                                    <label>Nombres</label>
-                                    <input class="form-control borrar" id="txtnombres" type="text" placeholder="Nombres">
-                                </div>
-                                <div class="form-group">
-                                    <label>Apellidos</label>
-                                    <input class="form-control borrar" id="txtapellidos" type="text" placeholder="Apellidos">
-                                </div>
-                                <div class="form-group">
-                                    <label>Sexo</label>
-                                    <input class="form-control borrar" id="txtsexo" type="text" placeholder="Precio">
-                                </div>
+
+                                    <div class="form-group">
+                                        <label>Dni</label>
+                                        <input class="form-control borrar" id="txtdni" type="number">
+                                        <button type="button" id="btnconsultar" class="btn btn-primary">Consultar</button>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Nombres</label>
+                                        <input class="form-control borrar" id="txtnombres" type="text" placeholder="Nombres">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Apellidos</label>
+                                        <input class="form-control borrar" id="txtapellidos" type="text" placeholder="Apellidos">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Correo</label>
+                                        <input class="form-control borrar" id="txtcorreo" type="text" placeholder="Correo">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Contraseña</label>
+                                        <input class="form-control borrar" id="txtclave" type="text" placeholder="Contraseña">
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
