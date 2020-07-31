@@ -2,14 +2,13 @@
 @{
     ViewBag.Title = "Index";
 }
-
 <!-- Custom styles for this page -->
 <link href="~/assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 <!-- Button -->
 <div class="card-body">
     <button onclick="abrirModal(0)" class="btn btn-success" type="button" data-toggle="modal" data-target="#exampleModalXl">
-        <i class="fas fa-newspaper"></i> Nuevo producto
+        <i class="fas fa-plus"></i> Nuevo producto
     </button>
 </div>
 
@@ -27,11 +26,9 @@
                         <div class="card">
                             <div class="card-header">Imagen Producto</div>
                             <div class="card-body text-center">
-                                <img id="imgFoto" width="300" height="300" src="" alt="">
+                                <img class="borrar" id="imgFoto" width="100" height="100" style="border: 1px solid" />
                                 <div class="small font-italic text-muted mb-4">Recomendación 300x300</div>
-                                <div class="form-group">
-                                    <input type="file" class="form-control borrar" id="btnFoto">
-                                </div>
+                                <input type="file" class="borrar form-control" value="..." id="btnFoto" />
                             </div>
                         </div>
                     </div>
@@ -40,20 +37,21 @@
                             <div class="card-header">Detalles Producto</div>
                             <div class="card-body">
                                 <div class="form-group">
-                                    <input class="form-control borrar" id="txtidempresa" type="hidden">
-                                    <input class="form-control borrar" id="txtidproducto" type="hidden">
+                                    <input class="form-control" id="txtidempresa" type="hidden">
+                                    <input class="borrar form-control" id="txtidproducto" type="hidden">
                                 </div>
                                 <div class="form-group">
                                     <label>Nombre</label>
-                                    <input class="form-control borrar" id="txtnombre" type="text" placeholder="Nombre del producto">
+                                    <input class="borrar form-control" id="txtnombre" type="text" placeholder="Nombre del producto">
                                 </div>
                                 <div class="form-group">
                                     <label>Descripción</label>
-                                    <input class="form-control borrar" id="txtdescripcion" type="text" placeholder="Descripción del producto">
+                                    <textarea class="borrar form-control" id="txtdescripcion" rows="3"></textarea>
+
                                 </div>
                                 <div class="form-group">
                                     <label>Precio</label>
-                                    <input class="form-control borrar" id="txtprecio" type="text" placeholder="Precio">
+                                    <input class="borrar form-control" id="txtprecio" type="text" placeholder="Precio">
                                 </div>
                             </div>
                         </div>
@@ -71,53 +69,15 @@
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+        <h6 class="m-0 font-weight-bold text-primary">PRODUCTOS</h6>
     </div>
     <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Office</th>
-                        <th>Age</th>
-                        <th>Start date</th>
-                        <th>Salary</th>
-                    </tr>
-                </thead>
-                <tfoot>
-                    <tr>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Office</th>
-                        <th>Age</th>
-                        <th>Start date</th>
-                        <th>Salary</th>
-                    </tr>
-                </tfoot>
-                <tbody>
-                    <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
-                        <td>61</td>
-                        <td>2011/04/25</td>
-                        <td>$320,800</td>
-                    </tr>
-                    <tr>
-                        <td>Donna Snider</td>
-                        <td>Customer Support</td>
-                        <td>New York</td>
-                        <td>27</td>
-                        <td>2011/01/25</td>
-                        <td>$112,000</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="table-responsive" id="tabla">
+
         </div>
     </div>
 </div>
+
 
 <!-- Bootstrap core JavaScript-->
 <script src="~/assets/vendor/jquery/jquery.min.js"></script>
@@ -128,6 +88,10 @@
 
 <!-- Custom scripts for all pages-->
 <script src="~/assets/js/sb-admin-2.min.js"></script>
+
+
+<script src="~/scripts/Producto.js"></script>
+
 <!-- Page level plugins -->
 <script src="~/assets/vendor/datatables/jquery.dataTables.min.js"></script>
 
@@ -135,4 +99,3 @@
 <!-- Page level custom scripts -->
 <script src="~/assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 <script src="~/assets/js/demo/datatables-demo.js"></script>
-

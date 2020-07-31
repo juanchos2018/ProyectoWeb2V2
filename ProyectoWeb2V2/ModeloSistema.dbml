@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="bd_web" Class="ModeloSistemaDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=AGONZALES;Initial Catalog=bd_web;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="bd_webConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.CATEGORIA" Member="CATEGORIA">
+    <Type Name="CATEGORIA">
+      <Column Name="IDCATEGORIA" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="NOMBRE" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EMPRESA" Member="EMPRESA">
+    <Type Name="EMPRESA">
+      <Column Name="IDEMPRESA" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="NOMBRE" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Association Name="EMPRESA_PRODUCTO" Member="PRODUCTO" ThisKey="IDEMPRESA" OtherKey="IDEMPRESA" Type="PRODUCTO" />
+      <Association Name="EMPRESA_CONDUCTOR" Member="CONDUCTOR" ThisKey="IDEMPRESA" OtherKey="IDEMPRESA" Type="CONDUCTOR" />
+      <Association Name="EMPRESA_PEDIDO" Member="PEDIDO" ThisKey="IDEMPRESA" OtherKey="IDEMPRESA" Type="PEDIDO" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PRODUCTO" Member="PRODUCTO">
+    <Type Name="PRODUCTO">
+      <Column Name="IDPRODUCTO" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IDEMPRESA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="PRECIO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IMAGEN" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX)" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(1)" CanBeNull="true" />
+      <Association Name="EMPRESA_PRODUCTO" Member="EMPRESA" ThisKey="IDEMPRESA" OtherKey="IDEMPRESA" Type="EMPRESA" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CONDUCTOR" Member="CONDUCTOR">
+    <Type Name="CONDUCTOR">
+      <Column Name="IDCONDUCTOR" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IDEMPRESA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DNI" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="NOMBRES" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="APELLIDOS" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CORREO" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="CLAVE" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="IMAGEN" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX)" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="FECHA" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="EMPRESA_CONDUCTOR" Member="EMPRESA" ThisKey="IDEMPRESA" OtherKey="IDEMPRESA" Type="EMPRESA" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.USUARIO" Member="USUARIO">
+    <Type Name="USUARIO">
+      <Column Name="IDUSUARIO" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CORREO" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="NOMBRE" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="CELULAR" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="CLAVE" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Association Name="USUARIO_PEDIDO" Member="PEDIDO" ThisKey="IDUSUARIO" OtherKey="IDUSUARIO" Type="PEDIDO" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PEDIDO" Member="PEDIDO">
+    <Type Name="PEDIDO">
+      <Column Name="IDPEDIDO" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IDEMPRESA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IDUSUARIO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FECHA" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="TOTAL" Type="System.Decimal" DbType="Decimal(6,2)" CanBeNull="true" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Association Name="EMPRESA_PEDIDO" Member="EMPRESA" ThisKey="IDEMPRESA" OtherKey="IDEMPRESA" Type="EMPRESA" IsForeignKey="true" />
+      <Association Name="USUARIO_PEDIDO" Member="USUARIO" ThisKey="IDUSUARIO" OtherKey="IDUSUARIO" Type="USUARIO" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

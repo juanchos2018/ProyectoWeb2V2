@@ -70,7 +70,10 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Components:</h6>
-                        @Html.ActionLink("Producto", "Registrar", "Producto", new { area = "" }, new { @class = "navbar-brand" })
+                        @Html.ActionLink("Producto", "Index", "Producto", new { area = "" }, new { @class = "navbar-brand" })
+                        @Html.ActionLink("Empresa", "Index", "Empresa", new { area = "" }, new { @class = "navbar-brand" })
+                        @Html.ActionLink("Conductor", "Index", "Conductor", new { area = "" }, new { @class = "navbar-brand" })
+                        @Html.ActionLink("Pedido", "Index", "Pedido", new { area = "" }, new { @class = "navbar-brand" })
                         <a class="collapse-item" href="buttons.html">Buttons</a>
                         <a class="collapse-item" href="cards.html">Cards</a>
                     </div>

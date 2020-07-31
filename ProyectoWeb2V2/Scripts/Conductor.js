@@ -75,25 +75,6 @@ function crearListado(arrayColumnas, data) {
         });
 }
 
-$("#btnconsultar").click(function () {
-    var dni = $("#txtdni").val();
-
-    $.ajax({
-        url: '/Conductor/Get_Consulta_Dni/?dni=' + dni,
-        type: 'GET',
-        dataType: 'json',
-        success: function (data) {
-            
-            $("#txtnombres").val(data.primerNombre + " " + data.segundoNombre);
-            $("#txtapellidos").val(data.apellidoPaterno + " " + data.apellidoMaterno);
-
-        },
-        error: function (err) {
-            alert("Error: " + err.responseText);
-        }
-    });
-});
-
 
 function Agregar() {
 
@@ -136,48 +117,6 @@ function Agregar() {
     else {
 
     }
-
-
-    if (window.FormData == undefined)
-        alert("Error: FormData is undefined");
-
-    else {
-        var fileUpload = $("#fileToUpload").get(0); 
-        var dni = $("#txtdni").val();
-        var nombres_conductor = $("#txtnombres").val();
-        var apellido_conductor = $("#txtapellidos").val();
-        var correo_conductor = $("#txtcorreo").val();
-        var clave_conductor = $("#txtclave").val();
-        var files = fileUpload.files;
-        var fileData = new FormData();
-
-        fileData.append(files[0].name, files[0]);
-        fileData.append("dni_conductor", dni);
-        fileData.append("nombres_conductor", nombres_conductor);
-        fileData.append("apellido_conductor", apellido_conductor);
-        fileData.append("correo_conductor", correo_conductor);
-        fileData.append("clave_conductor", clave_conductor);
-      
-        // ShowProgress();
-        $.ajax({
-            url: '/Conductor/CreateConductor',
-            type: 'post',
-            datatype: 'json',
-            contentType: false,
-            processData: false,
-            async: false,
-            data: fileData,
-            success: function (response) {
-                console.log("respuesta es:" + response);
-                //alert("Registrado Conductor  ---");
-               // listavehiculos();
-            },
-            error: function (xhr, status) {
-                alert('Disculpe, existió un problema');
-            },
-        });
-    }
-    
 }
 
 var btnFoto = document.getElementById("fileToUpload");

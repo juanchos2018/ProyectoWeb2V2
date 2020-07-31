@@ -79,5 +79,63 @@ namespace ProyectoWeb2V2.Controllers
             return Json(status, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult recuperarDatos(int id)
+        {
+            ModeloSistemaDataContext db = new ModeloSistemaDataContext();
+            var lista = db.CONDUCTOR.Where(p => p.IDCONDUCTOR.Equals(id))
+                 .Select(p => new
+                 {
+                     p.IDCONDUCTOR,
+                     p.IDEMPRESA,
+                     p.DNI,
+                     p.NOMBRES,
+                     p.APELLIDOS,
+                     p.CORREO,
+                     p.CLAVE,
+                     FOTOMOSTRAR = Convert.ToBase64String(p.IMAGEN.ToArray())   
+                 });
+            return Json(lista, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult listaConductor()
+        {
+            ModeloSistemaDataContext db = new ModeloSistemaDataContext();
+            var lista = db.CONDUCTOR
+                .Select(p => new { p.IDCONDUCTOR, p.DNI, p.NOMBRES, p.APELLIDOS }).ToList();
+            return Json(lista, JsonRequestBehavior.AllowGet);
+        }
+
+        public int guardarDatos(CONDUCTOR objconductor, string cadenaFoto)
+        {
+            ModeloSistemaDataContext db = new ModeloSistemaDataContext();
+            int nregistrosafectados = 0;
+
+            try
+            {
+                //Nuevo
+                if (objconductor.IDCONDUCTOR == 0)
+                {
+                    objconductor.IMAGEN = Convert.FromBase64String(cadenaFoto);
+                    db.CONDUCTOR.InsertOnSubmit(objconductor);
+                    db.SubmitChanges();
+                    nregistrosafectados = 1;
+                }
+
+                //Editar
+                else
+                {
+                    CONDUCTOR oconductor = db.CONDUCTOR.Where(p => p.IDCONDUCTOR.Equals(objconductor.IDCONDUCTOR)).First();
+                    oconductor.IMAGEN = Convert.FromBase64String(cadenaFoto);
+                    db.SubmitChanges();
+                    nregistrosafectados = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                nregistrosafectados = 0;
+            }
+
+            return nregistrosafectados;
+        }
     }
 }
